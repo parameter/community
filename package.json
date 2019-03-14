@@ -40,5 +40,6 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.5"
-  }
+  },
+  "proxy": "http://localhost:3003"
 }
