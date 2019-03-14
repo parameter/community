@@ -23,3 +23,8 @@
     margin: 10px 0 46px 0!important;
 }
 
+.auth-form__set-register {
+    position: absolute;
+    right: 40px;
+    bottom: 40px;
+}

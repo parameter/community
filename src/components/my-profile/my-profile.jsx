@@ -25,7 +25,7 @@ class MyProfile extends Component {
 
             // tags for types of living 
             living_factors: [
-                { name: 'HBTQ',  selected: false, val: '4', icon: 'rainbow-flag.svg' },
+                /* { name: 'HBTQ',  selected: false, val: '4', icon: 'rainbow-flag.svg' }, */
                 { name: 'Hus / Villa',  selected: false, val: '5', icon: 'house.svg' },
                 { name: 'Lägenhet',  selected: false, val: '6', icon: 'apartments.svg' },
                 { name: 'Djur',  selected: false, val: '7', icon: 'animals.svg' },

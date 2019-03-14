@@ -87,15 +87,20 @@ class AuthForm extends Component {
         });
     };
 
+    setregister = event => {
+        console.log('setregister');
+        this.setState({signup: true});
+    };
+
     componentWillReceiveProps(last,next) {
         console.log('componentWillReceiveProps',last,next);
     }
 
     render() {
 
-        console.log('render',this.props.isAuthenticated);
+        console.log('render',this.state.authenticated, this.state.signup);
 
-        if (this.state.authenticated) {
+        if (this.state.authenticated && this.state.signup === false) {
             return <div className="auth-form__logout">
                 <p onClick={this.logout}>Logga av</p>
             </div>;
@@ -109,13 +114,14 @@ class AuthForm extends Component {
                         <TextField fullWidth margin="normal" label="password" type="password" value={this.state.password} onChange={this.handleChange('password')} variant="outlined" />
                         <Button className="auth-form__button" type="submit" variant="contained">Logga in!</Button>
                     </form>
+                    <p className="auth-form__set-register" onClick={this.setregister}>Register</p>
                 </div>
         } else {
             return <div className="auth-form">
                     <form className="auth-form__holder" onSubmit={this.signup}>
                         <p className="auth-form__title">Registrera</p>
-                        <input type="text" name="email" />
-                        <input type="password" name="password" />
+                        <TextField fullWidth margin="normal" label="email" type="email" value={this.state.email} onChange={this.handleChange('email')} variant="outlined" />
+                        <TextField fullWidth margin="normal" label="password" type="password" value={this.state.password} onChange={this.handleChange('password')} variant="outlined" />
                         <Button className="auth-form__button" type="submit" variant="contained">Registrera!</Button>
                     </form>
                 </div>
