@@ -1,0 +1,30 @@
+.form_row__checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .form_row__box {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 0 0;
+    padding: 25px 45px 25px 25px;
+  }
+  
+  .form_row__box-icon {
+    display: flex;
+    width: 60px;
+    min-width: 60px;
+    margin: 0 0 10px 0;
+  }
+  
+  .form_row__box._checked {
+    background: #eeeeee;
+  }
+  
+  .form_row .form_title {
+    font-size: 34px;
+    color: #9900FF;
+    font-family: 'Archivo Narrow';
+    letter-spacing: 0.04em;
+  }
