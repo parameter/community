@@ -66,17 +66,16 @@ class AuthForm extends Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({})
-        }).then(function(response) {
+        }).then(response => {
             if (response.statusText === 'OK') {
                 return response.json();
             }
-        }).then(function(data) {
+        }).then(data => {
             if (data.success) {
-                console.log('deauthenticateUser');
                 this.props.authService.deauthenticateUser();
                 this.setState({authenticated: false});
             }
-        }).catch(function(err) {
+        }).catch(err => {
             // Error :(
         });
     }
@@ -92,13 +91,17 @@ class AuthForm extends Component {
         this.setState({signup: true});
     };
 
-    componentWillReceiveProps(last,next) {
-        console.log('componentWillReceiveProps',last,next);
+    componentDidMount() {
+        console.log( this.state.email );
+        if (this.props.authService.isUserAuthenticated()) {
+            this.setState({
+                authenticated: true,
+                signup: false
+            });
+        }
     }
 
     render() {
-
-        console.log('render',this.state.authenticated, this.state.signup);
 
         if (this.state.authenticated && this.state.signup === false) {
             return <div className="auth-form__logout">

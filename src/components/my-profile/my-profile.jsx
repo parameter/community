@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Checkbox, Button } from '@material-ui/core';
+import _ from 'underscore';
 import './my-profile.css';
  
 class MyProfile extends Component {
@@ -35,6 +36,39 @@ class MyProfile extends Component {
         }
     }
 
+    componentDidMount() {
+        this.getProfile();
+    }
+
+    getProfile() {
+        fetch('/api/get-profile', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'bearer ' + localStorage.getItem('token'), 
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.statusText === 'OK') {
+                return response.json();
+            }
+        }).then(data => {
+            if (data) {
+                this.populateForm(data);
+            }
+        }).catch(err => {
+            // Error :(
+        }); 
+    }
+
+    populateForm(data) {
+        var formData = { living_factors: this.state.living_factors }
+        formData.living_factors.forEach((item,i)=> {
+            formData.living_factors[i].selected = data.living_factors.indexOf( parseInt(formData.living_factors[i].val)) !== -1;
+        });
+        this.setState(formData);
+    }
+
     printFactors() {
         return this.state.living_factors.map((item,i) => {
             return <label className="form_row__box" key={i}>
@@ -67,11 +101,11 @@ class MyProfile extends Component {
 
     prepareSaveObject() {
         return {
-            living_factors: this.state.living_factors.map(item => {
-                if (item.selected === true) {
-                    return item.val;
-                }
-            })
+            living_factors: _.chain(this.state.living_factors)
+                .where({selected: true})
+                .pluck('val')
+                .flatten()
+                .value()
         }
     }
 
