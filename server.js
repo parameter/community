@@ -2,8 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const config = require('./config');
-const graphqlHTTP = require('express-graphql');
-const profileSchema = require('./server/models/profile');
 
 // connect to the database and load models
 require('./server/models').connect(config.dbUri);
@@ -32,13 +30,6 @@ const authRoutes = require('./server/routes/auth');
 const apiRoutes = require('./server/routes/api');
 app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
-
-/*
-app.use('/profiles', graphqlHTTP({
-  profileSchema,
-  graphiql: true
-}));
-*/
 
 // Set Port, hosting services will look for process.env.PORT
 app.set('port', (process.env.PORT || 3003));
