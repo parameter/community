@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Checkbox, Button } from '@material-ui/core';
 import _ from 'underscore';
 import './my-profile.css';
- 
+
 class MyProfile extends Component {
 
     constructor() {
@@ -35,31 +35,6 @@ class MyProfile extends Component {
         }
     }
 
-    componentDidMount() {
-        this.getProfile();
-    }
-
-    getProfile() {
-        fetch('/api/get-profile', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': 'bearer ' + localStorage.getItem('token'), 
-                'Content-Type': 'application/json'
-            }
-        }).then(response => {
-            if (response.statusText === 'OK') {
-                return response.json();
-            }
-        }).then(data => {
-            if (data) {
-                this.populateForm(data);
-            }
-        }).catch(err => {
-            // Error :(
-        }); 
-    }
-
     populateForm(data) {
         var formData = { living_factors: this.state.living_factors }
         formData.living_factors.forEach((item,i)=> {
@@ -69,11 +44,13 @@ class MyProfile extends Component {
     }
 
     printFactors() {
+        
         return this.state.living_factors.map((item,i) => {
+            var selected = typeof this.state.context.profile.living_factors != 'undefined' ? this.state.context.profile.living_factors.indexOf( parseInt(item.val)) : false;
             return <label className="form_row__box" key={i}>
                 <img className="form_row__box-icon" src={'/assets/icons/' + item.icon} alt="" />
                 <div>
-                    <Checkbox onChange={() => this.changeState('living_factors',i)} checked={item.selected} />
+                    <Checkbox onChange={() => this.changeState('living_factors',i)} checked={selected} />
                     {item.name}
                 </div>
             </label>

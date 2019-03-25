@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoClient = require('mongodb').MongoClient;
-const graphqlHTTP = require('express-graphql');
-const profileGraphQLSchema = require('../models/profile-graphql-schema');
+
 const mongoUrl = 'mongodb://localhost:27017/community';
 const Profile = require('mongoose').model('Profile');
 
@@ -43,9 +42,6 @@ router.get('/get-profile', async (req, res, next) => {
     res.status(200).json(profile);
 });
 
-router.use('/profiles', graphqlHTTP({
-    profileGraphQLSchema,
-    graphiql: true
-}));
+
 
 module.exports = router;

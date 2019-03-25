@@ -34,6 +34,35 @@ app.use('/api', apiRoutes);
 // Set Port, hosting services will look for process.env.PORT
 app.set('port', (process.env.PORT || 3003));
 
+
+
+
+// Subscriptions START
+const { graphqlExpress } = require('graphql-server-express');
+const { createServer } = require('http');
+const { execute, subscribe } = require('graphql');
+const { SubscriptionServer } = require('subscriptions-transport-ws');
+const profileGraphQLSchema = require('./server/models/profile-graphql-schema');
+
+app.use('/graphql', graphqlExpress({
+  schema: profileGraphQLSchema
+}));
+
+const subServer = createServer(app);
+
+subServer.listen(4000, () => {
+    new SubscriptionServer({
+      execute,
+      subscribe,
+      schema: profileGraphQLSchema,
+    }, {
+      server: subServer,
+      path: '/subscriptions',
+    });
+});
+// Subscriptions END
+
+
 // start the server
 app.listen(app.get('port'), () => {
   console.log(`Server is running on port ${app.get('port')}`);

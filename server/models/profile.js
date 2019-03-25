@@ -3,13 +3,13 @@ const bcrypt = require('bcryptjs');
 
 // define the ProfileSchema model schema
 const ProfileSchema = new mongoose.Schema({
-  living_factors: {
     uid: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         index: { unique: true }
-      },
-    type: [Number]
-  }
+    },
+    living_factors: {
+        type: [Number]
+    }
 });
 
 module.exports = mongoose.model('Profile', ProfileSchema);
